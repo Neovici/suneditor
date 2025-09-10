@@ -7,21 +7,7 @@
  */
 'use strict';
 
-(function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_MODULES a window with a document');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-    const fileBrowser = {
+const fileBrowser = {
         name: 'fileBrowser',
         _xmlHttp: null,
         _loading: null,
@@ -356,23 +342,22 @@
         }
     };
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_MODULES) {
-            Object.defineProperty(window, 'SUNEDITOR_MODULES', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
-
-        Object.defineProperty(window.SUNEDITOR_MODULES, 'fileBrowser', {
+if (typeof window !== 'undefined') {
+    if (!window.SUNEDITOR_MODULES) {
+        Object.defineProperty(window, 'SUNEDITOR_MODULES', {
             enumerable: true,
             writable: false,
             configurable: false,
-            value: fileBrowser
+            value: {}
         });
     }
 
-    return fileBrowser;
-}));
+    Object.defineProperty(window.SUNEDITOR_MODULES, 'fileBrowser', {
+        enumerable: true,
+        writable: false,
+        configurable: false,
+        value: fileBrowser
+    });
+}
+
+export default fileBrowser;

@@ -7,21 +7,7 @@
  */
 'use strict';
 
-(function (global, factory) {
-	if (typeof module === 'object' && typeof module.exports === 'object') {
-		module.exports = global.document ?
-			factory(global, true) :
-			function (w) {
-				if (!w.document) {
-					throw new Error('SUNEDITOR_LANG a window with a document');
-				}
-				return factory(w);
-			};
-	} else {
-		factory(global);
-	}
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-	const lang = {
+const lang = {
 		code: 'es',
 		toolbar: {
 			default: 'Valor por defecto',
@@ -166,23 +152,22 @@
 		}
 	};
 
-	if (typeof noGlobal === typeof undefined) {
-		if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
-
-        Object.defineProperty(window.SUNEDITOR_LANG, 'es', {
+if (typeof window !== 'undefined') {
+    if (!window.SUNEDITOR_LANG) {
+        Object.defineProperty(window, 'SUNEDITOR_LANG', {
             enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
+            writable: false,
+            configurable: false,
+            value: {}
         });
-	}
+    }
 
-	return lang;
-}));
+    Object.defineProperty(window.SUNEDITOR_LANG, 'es', {
+        enumerable: true,
+        writable: true,
+        configurable: true,
+        value: lang
+    });
+}
+
+export default lang;
